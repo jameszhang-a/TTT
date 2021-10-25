@@ -2,7 +2,11 @@
 import Board from './components/Board';
 
 function App() {
-  return <p className='text-green-500'>Hello</p>;
+  return (
+    <div className='bg-gray-600 pt-28'>
+      <Board />
+    </div>
+  );
 }
 
 export default App;

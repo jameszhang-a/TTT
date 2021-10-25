@@ -1,9 +1,12 @@
 module.exports = {
-  mode     : 'jit',
   purge    : [ './src/**/*.{js,jsx,ts,tsx}', './public/index.html' ],
   darkMode : false, // or 'media' or 'class'
   theme    : {
-    extend : {}
+    extend : {
+      gridTemplateColumns : {
+        ttt : 'repeat(3,96px)'
+      }
+    }
   },
   variants : {
     extend : {}
