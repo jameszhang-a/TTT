@@ -18,6 +18,7 @@ const Board = () => {
   const [ game, setGame ] = useState(new Array(9).fill());
   const [ history, setHistory ] = useState([ { player: 1, state: new Array(9).fill() } ]);
   const [ player, setPlayer ] = useState(1);
+  const [ winner, setWinner ] = useState('');
 
   useEffect(
     () => {
@@ -27,6 +28,13 @@ const Board = () => {
     },
     [ game ]
   );
+
+  const resetGame = () => {
+    setGame(new Array(9).fill());
+    setHistory([ { player: 1, state: new Array(9).fill() } ]);
+    setPlayer(1);
+    setWinner('');
+  };
 
   const handleClick = idx => {
     let temp;
@@ -58,14 +66,26 @@ const Board = () => {
       const idx = configs[i];
 
       if (game[idx[0]] && game[idx[0]] === game[idx[1]] && game[idx[0]] === game[idx[2]]) {
-        alert(`player ${player} wins`);
+        setWinner(game[idx[0]]);
+        return;
       }
     }
+    setWinner('');
   };
+
+  const checkTied = () => {
+    let count = 0;
+    for (let c of game) {
+      if (c) count++;
+    }
+    return count === 9;
+  };
+
+  const winningStyle = winner || checkTied() ? 'board over' : 'board';
 
   return (
     <div className='game'>
-      <div className='board'>
+      <div className={winningStyle}>
         {game.map((ele, idx) => {
           return (
             <Block
@@ -78,7 +98,17 @@ const Board = () => {
           );
         })}
       </div>
-      <History history={history} setHistory={setHistory} setGame={setGame} setPlayer={setPlayer} />
+      <h1>{winner ? `${winner} won!` : checkTied() ? 'Tied game' : ''}</h1>
+      {(winner || checkTied()) && <button onClick={resetGame}>Again?</button>}
+
+      {history.length > 1 && (
+        <History
+          history={history}
+          setHistory={setHistory}
+          setGame={setGame}
+          setPlayer={setPlayer}
+        />
+      )}
     </div>
   );
 };

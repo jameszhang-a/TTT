@@ -19,9 +19,11 @@ const History = ({ history, setHistory, setGame, setPlayer }) => {
         <tbody>
           {history &&
             history.slice(0, -1).map((hist, idx) => {
+              const player = hist.player === 1 ? 'X' : 'O';
+
               return (
                 <tr>
-                  <td>{`move ${idx}`}</td>
+                  <td>{`move ${idx} (${player})`}</td>
                   <td>
                     <button onClick={() => handleClick(hist, idx)}>Go</button>
                   </td>

@@ -9,6 +9,7 @@
 .App {
   min-height: 100vh;
   background-color: rgb(239, 223, 187);
+  font-family: sans-serif;
 }
 
 .game {
@@ -23,14 +24,15 @@ table {
 
 td,
 th {
-  padding: 0.5rem;
+  padding: 0.1rem 0.5rem 0 0;
   text-align: left;
 }
 
 button {
+  border: none;
   line-height: 1;
   display: inline-block;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   text-decoration: none;
   border-radius: 5px;
   color: #fff;
@@ -74,8 +76,14 @@ button {
 
 .O {
   background-color: #cce2f2;
+  pointer-events: none;
 }
 
 .X {
   background-color: #ffcce1;
+  pointer-events: none;
+}
+
+.over {
+  pointer-events: none;
 }
