@@ -1,9 +1,9 @@
-// import './App.css';
 import Board from './components/Board';
+import './App.css';
 
 function App() {
   return (
-    <div className='bg-gray-600 pt-28'>
+    <div className='App'>
       <Board />
     </div>
   );

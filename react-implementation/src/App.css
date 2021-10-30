@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: rgb(239, 223, 187);
+}
+
+.board {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(3, auto);
+  gap: .5rem;
+  /* background-color: black; */
+}
+
+.block {
+  width: 6rem;
+  height: 6rem;
+  background-color: rgb(248, 248, 255);
+  border-radius: .5rem;
+  transition: 100ms;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.block:hover {
+  transform: scale(1.1);
+}

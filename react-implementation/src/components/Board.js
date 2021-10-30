@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Block from './Block';
 
 const Board = () => {
@@ -24,8 +24,7 @@ const Board = () => {
   };
 
   return (
-    <div className='grid grid-cols-ttt justify-center content-center 
-					justify-items-center items-center bg-gray-200'>
+    <div className='board'>
       {game.map((ele, idx) => {
         return (
           <Block
