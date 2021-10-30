@@ -11,12 +11,43 @@
   background-color: rgb(239, 223, 187);
 }
 
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 0.5rem;
+  text-align: left;
+}
+
+button {
+  line-height: 1;
+  display: inline-block;
+  font-size: 1.2rem;
+  text-decoration: none;
+  border-radius: 5px;
+  color: #fff;
+  padding: 8px;
+  background-color: #54a1a0;
+}
+
+.history {
+  padding-top: 2vh;
+}
+
 .board {
+  padding-top: 20vh;
   width: 100vw;
-  height: 100vh;
-  display: grid;
   justify-content: center;
   align-content: center;
+  display: grid;
   grid-template-columns: repeat(3, auto);
   gap: .5rem;
   /* background-color: black; */

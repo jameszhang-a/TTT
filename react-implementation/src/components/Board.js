@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Block from './Block';
+import History from './History';
 
+// All positions to check to see if they are the same value
 const configs = [
   [ 0, 1, 2 ],
   [ 3, 4, 5 ],
@@ -14,31 +16,38 @@ const configs = [
 
 const Board = () => {
   const [ game, setGame ] = useState(new Array(9).fill());
+  const [ history, setHistory ] = useState([ { player: 1, state: new Array(9).fill() } ]);
   const [ player, setPlayer ] = useState(1);
 
   useEffect(
     () => {
-      checkWinner();
+      setTimeout(() => {
+        checkWinner();
+      }, 150);
     },
     [ game ]
   );
 
   const handleClick = idx => {
-    setGame(
-      game.map((ele, i) => {
-        if (i === idx && !ele) {
-          if (player === 1) {
-            setPlayer(2);
-            return 'X';
-          }
-          if (player === 2) {
-            setPlayer(1);
-            return 'O';
-          }
+    let temp;
+    const newGame = game.map((ele, i) => {
+      if (i === idx && !ele) {
+        if (player === 1) {
+          setPlayer(2);
+          temp = 2;
+          return 'X';
         }
-        return ele;
-      })
-    );
+        if (player === 2) {
+          setPlayer(1);
+          temp = 1;
+          return 'O';
+        }
+      }
+      return ele;
+    });
+
+    setGame(newGame);
+    setHistory([ ...history, { player: temp, state: newGame } ]);
   };
 
   const checkWinner = () => {
@@ -55,18 +64,21 @@ const Board = () => {
   };
 
   return (
-    <div className='board'>
-      {game.map((ele, idx) => {
-        return (
-          <Block
-            checked={ele}
-            key={idx}
-            onClick={() => {
-              handleClick(idx);
-            }}
-          />
-        );
-      })}
+    <div className='game'>
+      <div className='board'>
+        {game.map((ele, idx) => {
+          return (
+            <Block
+              checked={ele}
+              key={idx}
+              onClick={() => {
+                handleClick(idx);
+              }}
+            />
+          );
+        })}
+      </div>
+      <History history={history} setHistory={setHistory} setGame={setGame} setPlayer={setPlayer} />
     </div>
   );
 };
