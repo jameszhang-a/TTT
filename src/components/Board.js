@@ -22,9 +22,26 @@ const Board = () => {
 
   useEffect(
     () => {
-      setTimeout(() => {
-        checkWinner();
-      }, 150);
+      const checkWinner = () => {
+        // 0 1 2
+        // 3 4 5
+        // 6 7 8
+        for (let i = 0; i < configs.length; i++) {
+          const idx = configs[i];
+
+          if (
+            game[idx[0]] &&
+            game[idx[0]] === game[idx[1]] &&
+            game[idx[0]] === game[idx[2]]
+          ) {
+            setWinner(game[idx[0]]);
+            return;
+          }
+        }
+        setWinner('');
+      };
+
+      checkWinner();
     },
     [ game ]
   );
@@ -36,7 +53,7 @@ const Board = () => {
     setWinner('');
   };
 
-  const handleClick = idx => {
+  const handleClick = (idx) => {
     let temp;
     const newGame = game.map((ele, i) => {
       if (i === idx && !ele) {
@@ -56,21 +73,6 @@ const Board = () => {
 
     setGame(newGame);
     setHistory([ ...history, { player: temp, state: newGame } ]);
-  };
-
-  const checkWinner = () => {
-    // 0 1 2
-    // 3 4 5
-    // 6 7 8
-    for (let i = 0; i < configs.length; i++) {
-      const idx = configs[i];
-
-      if (game[idx[0]] && game[idx[0]] === game[idx[1]] && game[idx[0]] === game[idx[2]]) {
-        setWinner(game[idx[0]]);
-        return;
-      }
-    }
-    setWinner('');
   };
 
   const checkTied = () => {
