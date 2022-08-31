@@ -1,0 +1,11 @@
+.tile {
+  min-width: 50px;
+  min-height: 50px;
+  border: 1px solid goldenrod;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(3, 75px);
+  grid-template-rows: repeat(3, auto);
+}
