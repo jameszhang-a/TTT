@@ -1,6 +1,9 @@
 .tile {
   min-width: 50px;
   min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid goldenrod;
 }
 

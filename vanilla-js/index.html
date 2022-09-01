@@ -22,10 +22,12 @@
         <![endif] -->
         <h1 id='title'>hello world</h1>
         <div id='board'></div>
-        <div id='restart-button'>Restart</div>
+        <button id='restart_button'>Restart</button>
 
 
-        <script src="build/index.js" async defer></script>
+        <script>var exports = {};</script>
+        <script type='module' src="build/types.js" async defer></script>
+        <script type='module' src="build/index.js" async defer></script>
     </body>
 
 </html>

@@ -1,13 +1,52 @@
+import { Player, Tile } from './types';
+
+const HEIGHT = 3 as const;
+const WIDTH = 3 as const;
+const PATHS = [
+  [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ],
+  [
+    [1, 0],
+    [1, 1],
+    [1, 2],
+  ],
+  [
+    [2, 0],
+    [2, 1],
+    [2, 2],
+  ],
+  [
+    [0, 0],
+    [1, 0],
+    [2, 0],
+  ],
+  [
+    [0, 1],
+    [1, 1],
+    [2, 1],
+  ],
+  [
+    [0, 2],
+    [1, 2],
+    [2, 2],
+  ],
+  [
+    [0, 0],
+    [1, 1],
+    [2, 2],
+  ],
+  [
+    [0, 2],
+    [1, 1],
+    [2, 0],
+  ],
+] as const;
+
 const board = document.querySelector('#board');
-const restart = document.querySelector('#restart_button');
-
-const HEIGHT = 3,
-  WIDTH = 3;
-
-type Tile = {
-  clicked: boolean;
-  player: '' | 'x' | 'o';
-};
+const restart = document.querySelector('#restart_button') as HTMLElement;
 
 // make board
 const grid: Tile[][] = Array(HEIGHT)
@@ -21,27 +60,82 @@ const grid: Tile[][] = Array(HEIGHT)
       }))
   );
 
-const tileClick = (e: Event) => {
-  // have to type assert bc TS doesn't know the target is an HTML element
-  const target = (e.target as HTMLElement).id;
+let currentPlayer: Player = 'o';
+let gameOver = false;
 
-  const [x, y] = target.split('-');
-  console.log(x, y);
+const checkWinner = () => {
+  for (const path of PATHS) {
+    let score = 0;
+    for (const pos of path) {
+      score +=
+        grid[pos[0]][pos[1]].player === ''
+          ? 0
+          : grid[pos[0]][pos[1]].player === 'x'
+          ? -1
+          : 1;
+    }
+
+    if (score === 3) {
+      alert('o wins!');
+      gameOver = true;
+    } else if (score === -3) {
+      alert('x wins!');
+      gameOver = true;
+    }
+  }
 };
 
-const initializeBoard = () => {
+const tileClick = (e: Event) => {
+  if (gameOver) return;
+  // have to type assert bc TS doesn't know the target is an HTML element
+  const target = e.target as HTMLElement;
+
+  let [x_coord, y_coord] = target.id.split('-');
+  let [x, y] = [Number(x_coord), Number(y_coord)];
+  const tile = grid[x][y];
+
+  if (tile.clicked) {
+    console.log("can't click on a clicked tile");
+    return;
+  }
+
+  tile.clicked = true;
+  tile.player = currentPlayer;
+  target.innerHTML = currentPlayer;
+  currentPlayer = currentPlayer === 'o' ? 'x' : 'o';
+
+  checkWinner();
+};
+
+const restartGame = () => {
+  for (let i = 0; i < HEIGHT; i++) {
+    for (let j = 0; j < WIDTH; j++) {
+      grid[i][j] = {
+        clicked: false,
+        player: '',
+      };
+
+      (document.getElementById(`${i}-${j}`) as HTMLElement).innerHTML = '';
+    }
+  }
+
+  gameOver = false;
+  currentPlayer = 'o';
+};
+
+const initializeGame = () => {
   for (const [i, row] of grid.entries()) {
-    for (const [j, square] of row.entries()) {
+    for (const [j, _] of row.entries()) {
       const gridTile = document.createElement('div');
       gridTile.setAttribute('id', `${i}-${j}`);
       gridTile.setAttribute('class', 'tile');
       board?.appendChild(gridTile);
 
       gridTile.addEventListener('click', tileClick);
-      console.log(i, j);
     }
   }
+
+  restart.onclick = restartGame;
 };
 
-console.log(grid);
-initializeBoard();
+initializeGame();
