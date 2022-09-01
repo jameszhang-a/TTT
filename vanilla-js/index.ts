@@ -102,6 +102,7 @@ const tileClick = (e: Event) => {
   tile.clicked = true;
   tile.player = currentPlayer;
   target.innerHTML = currentPlayer;
+  target.classList.add(currentPlayer);
   currentPlayer = currentPlayer === 'o' ? 'x' : 'o';
 
   checkWinner();
@@ -116,6 +117,8 @@ const restartGame = () => {
       };
 
       (document.getElementById(`${i}-${j}`) as HTMLElement).innerHTML = '';
+      (document.getElementById(`${i}-${j}`) as HTMLElement).classList.remove('x');
+      (document.getElementById(`${i}-${j}`) as HTMLElement).classList.remove('o');
     }
   }
 

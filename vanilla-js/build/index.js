@@ -91,6 +91,7 @@ const tileClick = (e) => {
     tile.clicked = true;
     tile.player = currentPlayer;
     target.innerHTML = currentPlayer;
+    target.classList.add(currentPlayer);
     currentPlayer = currentPlayer === 'o' ? 'x' : 'o';
     checkWinner();
 };
@@ -102,6 +103,8 @@ const restartGame = () => {
                 player: '',
             };
             document.getElementById(`${i}-${j}`).innerHTML = '';
+            document.getElementById(`${i}-${j}`).classList.remove('x');
+            document.getElementById(`${i}-${j}`).classList.remove('o');
         }
     }
     gameOver = false;
